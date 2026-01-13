@@ -13,7 +13,8 @@
     "alerts": "التنبيهات",
     "admin": "لوحة الإدارة",
     "profile": "الملف الشخصي",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "routeMap": "خريطة المسار"
   },
   "landing": {
     "title": "منصة مراقبة معدل ضربات قلب الخيل Victorious",
@@ -66,7 +67,19 @@
     "distance": "المسافة",
     "recovery": "وقت التعافي",
     "battery": "البطارية",
-    "esim": "بيانات eSIM"
+    "esim": "بيانات eSIM",
+    "noHorsesSelected": "لم يتم اختيار خيول",
+    "selectHorsesToView": "اختر الخيول لعرض لوحة التحكم",
+    "selectHorses": "اختر الخيول",
+    "changeSelection": "تغيير الاختيار",
+    "allHorses": "جميع الخيول",
+    "selectedHorses": "خيول محددة",
+    "total": "إجمالي",
+    "average": "المتوسط",
+    "maximum": "الحد الأقصى",
+    "allHorsesAverage": "متوسط جميع الخيول",
+    "allHorsesMaximum": "الحد الأقصى لجميع الخيول",
+    "allHorsesTotal": "إجمالي جميع الخيول"
   },
   "horse": {
     "title": "ملف الحصان",
@@ -139,6 +152,34 @@
     "previous": "السابق",
     "next": "التالي"
   },
+  "routeMap": {
+    "title": "موقع الإسطبل",
+    "selectRoutesToDisplay": "اختر المسارات للعرض",
+    "showAllRoutes": "عرض جميع المسارات",
+    "routes": "مسارات",
+    "totalHorses": "إجمالي الخيول",
+    "horsesMoving": "خيول متحركة",
+    "kmRoute": "مسار كم",
+    "distance": "المسافة",
+    "country": "الدولة",
+    "totalHorsesOnRoute": "إجمالي الخيول",
+    "activeHorses": "الخيول النشطة",
+    "avgRouteProgress": "متوسط تقدم المسار",
+    "horsesOnRoute": "الخيول على المسار",
+    "noHorsesAssigned": "لا توجد خيول مخصصة",
+    "route": "المسار",
+    "status": "الحالة",
+    "hr": "معدل النبض",
+    "speed": "السرعة",
+    "progress": "التقدم",
+    "bpm": "نبضة/دقيقة",
+    "kmh": "كم/ساعة",
+    "more": "المزيد"
+  },
+  "trainingSchedule": {
+    "routeMap": "خريطة المسار",
+    "viewOnMap": "عرض على الخريطة"
+  },
   "common": {
     "loading": "جاري التحميل...",
     "save": "حفظ",
@@ -147,6 +188,7 @@
     "delete": "حذف",
     "close": "إغلاق",
     "success": "نجح",
-    "error": "خطأ"
+    "error": "خطأ",
+    "na": "غير متاح"
   }
 }

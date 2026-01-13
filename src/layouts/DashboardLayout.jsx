@@ -20,7 +20,7 @@ const DashboardLayout = () => {
   const baseItems = [
     { path: '/dashboard', label: t('nav.dashboard') },
     { path: '/dashboard/schedule', label: t('nav.schedule') },
-    { path: '/dashboard/route-map', label: 'route map' },
+    { path: '/dashboard/route-map', label: t('nav.routeMap', 'route map') },
     { path: '/dashboard/alerts', label: t('nav.alerts') }
   ]
 

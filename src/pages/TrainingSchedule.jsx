@@ -469,7 +469,7 @@ const TrainingSchedule = () => {
               {/* GPS & Movement - Page 5 */}
               {activeSection === 5 && (
                 <SectionCard title="GPS & Movement" sectionIndex={5}>
-        <FieldRow label="Route Map" value="View on Map" />
+        <FieldRow label={t('trainingSchedule.routeMap')} value={t('trainingSchedule.viewOnMap')} />
         <FieldRow label="Start Coordinates" value={`${trainingSession.startCoordinates[0]}, ${trainingSession.startCoordinates[1]}`} />
         <FieldRow label="End Coordinates" value={`${trainingSession.endCoordinates[0]}, ${trainingSession.endCoordinates[1]}`} />
         <FieldRow label="Elevation Gain (m)" value={trainingSession.elevationGain} />

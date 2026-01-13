@@ -382,9 +382,9 @@ const LiveDashboard = () => {
       <div className="space-y-6">
         <h1 className="text-3xl font-bold">{t('dashboard.welcome')}, {user?.name}</h1>
         <div className="bg-white p-6 rounded-lg shadow text-center">
-          <p className="text-gray-600 mb-4">No horses selected</p>
+          <p className="text-gray-600 mb-4">{t('dashboard.noHorsesSelected')}</p>
           <Link to="/dashboard/horses" className="text-red-600 hover:text-red-800">
-            Select horses to view dashboard
+            {t('dashboard.selectHorsesToView')}
           </Link>
         </div>
       </div>
@@ -398,11 +398,11 @@ const LiveDashboard = () => {
           {t('dashboard.welcome')}, {user?.name}
           {horsesData.length === 0 ? (
             <span className="text-lg text-gray-600 ml-2">
-              (All Horses - {allHorsesData.length} total)
+              ({t('dashboard.allHorses')} - {allHorsesData.length} {t('dashboard.total')})
             </span>
           ) : horsesData.length > 1 ? (
             <span className="text-lg text-gray-600 ml-2">
-              ({horsesData.length} selected horses)
+              ({horsesData.length} {t('dashboard.selectedHorses')})
             </span>
           ) : null}
         </h1>
@@ -410,7 +410,7 @@ const LiveDashboard = () => {
           to="/dashboard/horses"
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
         >
-          {horsesData.length === 0 ? 'Select Horses' : 'Change Selection'}
+          {horsesData.length === 0 ? t('dashboard.selectHorses') : t('dashboard.changeSelection')}
         </Link>
       </div>
 
@@ -423,7 +423,7 @@ const LiveDashboard = () => {
                 key={horse.id}
                 className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium"
               >
-                {horse.name} (HR: <span className={getHRColor(horse.currentHr, horse.speed, horse.status)}>{horse.currentHr || 'N/A'}</span> bpm)
+                {horse.name} ({t('dashboard.currentHr')}: <span className={getHRColor(horse.currentHr, horse.speed, horse.status)}>{horse.currentHr || t('common.na')}</span> {t('routeMap.bpm')})
               </div>
             ))}
           </div>
@@ -435,7 +435,7 @@ const LiveDashboard = () => {
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm text-gray-600 mb-1">{t('dashboard.currentHr')}</div>
           {stats.currentHr === null || stats.currentHr === undefined ? (
-            <div className="text-3xl font-bold text-gray-400">N/A</div>
+            <div className="text-3xl font-bold text-gray-400">{t('common.na')}</div>
           ) : (
             <>
               <div className={`text-3xl font-bold ${getHRColor(stats.currentHr, stats.speed, stats.status)}`}>
@@ -443,7 +443,7 @@ const LiveDashboard = () => {
               </div>
               {(horsesData.length === 0 || horsesData.length > 1) && (
                 <div className="text-xs text-gray-500 mt-1">
-                  {horsesData.length === 0 ? 'All Horses Average' : 'Average'}
+                  {horsesData.length === 0 ? t('dashboard.allHorsesAverage') : t('dashboard.average')}
                 </div>
               )}
             </>
@@ -454,7 +454,7 @@ const LiveDashboard = () => {
           <div className="text-3xl font-bold text-red-600">{stats.maxHr} bpm</div>
           {(horsesData.length === 0 || horsesData.length > 1) && (
             <div className="text-xs text-gray-500 mt-1">
-              {horsesData.length === 0 ? 'All Horses Maximum' : 'Maximum'}
+              {horsesData.length === 0 ? t('dashboard.allHorsesMaximum') : t('dashboard.maximum')}
             </div>
           )}
         </div>
@@ -468,13 +468,13 @@ const LiveDashboard = () => {
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="text-sm text-gray-600 mb-1">{t('dashboard.speed')}</div>
           {stats.speed === null || stats.speed === undefined || stats.status === 'resting' ? (
-            <div className="text-3xl font-bold text-gray-400">N/A</div>
+            <div className="text-3xl font-bold text-gray-400">{t('common.na')}</div>
           ) : (
             <div className="text-3xl font-bold text-purple-600">{stats.speed.toFixed(1)} km/h</div>
           )}
           {(horsesData.length === 0 || horsesData.length > 1) && stats.speed !== null && (
             <div className="text-xs text-gray-500 mt-1">
-              {horsesData.length === 0 ? 'All Horses Average' : 'Average'}
+              {horsesData.length === 0 ? t('dashboard.allHorsesAverage') : t('dashboard.average')}
             </div>
           )}
         </div>
@@ -483,7 +483,7 @@ const LiveDashboard = () => {
           <div className="text-3xl font-bold text-red-600">{stats.distance.toFixed(1)} km</div>
           {(horsesData.length === 0 || horsesData.length > 1) && (
             <div className="text-xs text-gray-500 mt-1">
-              {horsesData.length === 0 ? 'All Horses Total' : 'Total'}
+              {horsesData.length === 0 ? t('dashboard.allHorsesTotal') : t('dashboard.total')}
             </div>
           )}
         </div>
@@ -525,7 +525,7 @@ const LiveDashboard = () => {
                 <Line
                   type="monotone"
                   dataKey="avgHR"
-                  name="Average Heart Rate (All Horses)"
+                  name={t('dashboard.allHorsesAverage')}
                   stroke={colors[0]}
                   strokeWidth={2}
                 />
@@ -555,7 +555,7 @@ const LiveDashboard = () => {
               <Tooltip cursor={{ strokeDasharray: '3 3' }} />
               {horsesData.length === 0 ? (
                 <Scatter
-                  name="All Horses (Sample)"
+                  name={t('dashboard.allHorses')}
                   data={allHorsesData.slice(0, 50).map(horse => ({
                     speed: horse.speed || 0,
                     hr: horse.currentHr || 0
@@ -593,7 +593,7 @@ const LiveDashboard = () => {
                     time: Math.round(stats.recoveryTime + (Math.random() * 5 - 2.5))
                   }))}
                   dataKey="time"
-                  name="Average Recovery Time (All Horses)"
+                  name={t('dashboard.allHorsesAverage')}
                   stroke={colors[0]}
                   strokeWidth={2}
                 />

@@ -236,15 +236,15 @@ const RouteMap = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">stable location</h1>
+        <h1 className="text-3xl font-bold">{t('routeMap.title')}</h1>
         <div className="text-sm text-gray-600">
-          {predefinedRoutes.length} Routes | {predefinedRoutes.reduce((sum, r) => sum + (r.horses?.length || 0), 0)} Total Horses | {Object.keys(horsePositions).length} Horses Moving
+          {predefinedRoutes.length} {t('routeMap.routes')} | {predefinedRoutes.reduce((sum, r) => sum + (r.horses?.length || 0), 0)} {t('routeMap.totalHorses')} | {Object.keys(horsePositions).length} {t('routeMap.horsesMoving')}
         </div>
       </div>
 
       {/* Route Selection Panel */}
       <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-lg font-semibold mb-4">Select Routes to Display</h2>
+        <h2 className="text-lg font-semibold mb-4">{t('routeMap.selectRoutesToDisplay')}</h2>
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => setSelectedRoutes([])}
@@ -254,7 +254,7 @@ const RouteMap = () => {
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            Show All Routes
+            {t('routeMap.showAllRoutes')}
           </button>
           {predefinedRoutes.map(route => (
             <button
@@ -315,9 +315,9 @@ const RouteMap = () => {
                   <Popup>
                     <div className="text-sm">
                       <div className="font-semibold">{route.name}</div>
-                      <div>Country: {route.country}</div>
-                      <div>Distance: {route.distance} km</div>
-                      {route.horses && <div>Horses: {route.horses.length}</div>}
+                      <div>{t('routeMap.country')}: {route.country}</div>
+                      <div>{t('routeMap.distance')}: {route.distance} km</div>
+                      {route.horses && <div>{t('routeMap.totalHorsesOnRoute')}: {route.horses.length}</div>}
                     </div>
                   </Popup>
                 </Marker>
@@ -337,12 +337,12 @@ const RouteMap = () => {
                 <Popup>
                   <div className="text-sm">
                     <div className="font-semibold text-red-600">{route.name}</div>
-                    <div>Country: {route.country}</div>
-                    <div>Distance: {route.distance} km</div>
+                    <div>{t('routeMap.country')}: {route.country}</div>
+                    <div>{t('routeMap.distance')}: {route.distance} km</div>
                     {route.horses && (
                       <>
-                        <div>Horses: {route.horses.length}</div>
-                        <div>Active: {route.horses.filter(h => h.status !== 'No connection').length}</div>
+                        <div>{t('routeMap.totalHorsesOnRoute')}: {route.horses.length}</div>
+                        <div>{t('routeMap.activeHorses')}: {route.horses.filter(h => h.status !== 'No connection').length}</div>
                       </>
                     )}
                   </div>
@@ -365,12 +365,12 @@ const RouteMap = () => {
                     <Popup>
                       <div className="text-sm">
                         <div className="font-semibold text-red-600">{horse.name}</div>
-                        <div>Route: {route.name}</div>
-                        <div>Country: {route.country}</div>
-                        <div>Status: {horse.status}</div>
-                        <div>HR: {horse.currentHr || 'N/A'} bpm</div>
-                        <div>Speed: {horse.speed ? `${horse.speed.toFixed(1)} km/h` : 'N/A'}</div>
-                        <div>Progress: {Math.round((position.currentIndex / route.points.length) * 100)}%</div>
+                        <div>{t('routeMap.route')}: {route.name}</div>
+                        <div>{t('routeMap.country')}: {route.country}</div>
+                        <div>{t('routeMap.status')}: {horse.status}</div>
+                        <div>{t('routeMap.hr')}: {horse.currentHr || t('common.na')} {t('routeMap.bpm')}</div>
+                        <div>{t('routeMap.speed')}: {horse.speed ? `${horse.speed.toFixed(1)} ${t('routeMap.kmh')}` : t('common.na')}</div>
+                        <div>{t('routeMap.progress')}: {Math.round((position.currentIndex / route.points.length) * 100)}%</div>
                       </div>
                     </Popup>
                   </Marker>
@@ -417,24 +417,24 @@ const RouteMap = () => {
               
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Distance:</span>
+                  <span className="text-gray-600">{t('routeMap.distance')}:</span>
                   <span className="font-semibold text-red-600">{route.distance} km</span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Country:</span>
+                  <span className="text-gray-600">{t('routeMap.country')}:</span>
                   <span className="font-medium">{route.country}</span>
                 </div>
                 
                 {route.horses && route.horses.length > 0 ? (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Total Horses:</span>
+                      <span className="text-gray-600">{t('routeMap.totalHorsesOnRoute')}:</span>
                       <span className="font-medium text-red-600">{route.horses.length}</span>
                     </div>
                     
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Active Horses:</span>
+                      <span className="text-gray-600">{t('routeMap.activeHorses')}:</span>
                       <span className="font-medium text-green-600">{activeHorses.length}</span>
                     </div>
                     
@@ -442,7 +442,7 @@ const RouteMap = () => {
                     {isActive && (
                       <div className="mt-3 pt-3 border-t border-gray-200">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-gray-600 font-medium">Avg. Route Progress:</span>
+                          <span className="text-gray-600 font-medium">{t('routeMap.avgRouteProgress')}:</span>
                           <span className="font-semibold text-red-600">{avgProgress}%</span>
                         </div>
                         
@@ -460,7 +460,7 @@ const RouteMap = () => {
                     
                     {/* List of horses on this route */}
                     <div className="mt-3 pt-3 border-t border-gray-200">
-                      <div className="text-xs font-semibold text-gray-600 mb-2">Horses on Route:</div>
+                      <div className="text-xs font-semibold text-gray-600 mb-2">{t('routeMap.horsesOnRoute')}:</div>
                       <div className="max-h-32 overflow-y-auto space-y-1">
                         {route.horses.slice(0, 10).map(horse => {
                           const positionKey = `${route.id}-${horse.id}`
@@ -477,14 +477,14 @@ const RouteMap = () => {
                           )
                         })}
                         {route.horses.length > 10 && (
-                          <div className="text-xs text-gray-500">+{route.horses.length - 10} more</div>
+                          <div className="text-xs text-gray-500">+{route.horses.length - 10} {t('routeMap.more')}</div>
                         )}
                       </div>
                     </div>
                   </>
                 ) : (
                   <div className="text-gray-500 text-center py-2">
-                    No horses assigned
+                    {t('routeMap.noHorsesAssigned')}
                   </div>
                 )}
               </div>

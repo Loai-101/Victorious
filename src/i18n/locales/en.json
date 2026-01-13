@@ -13,7 +13,8 @@
     "alerts": "Alerts",
     "admin": "Admin Panel",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "routeMap": "Route Map"
   },
   "landing": {
     "title": "Victorious Horse Heart Rate Monitor Platform",
@@ -66,7 +67,19 @@
     "distance": "Distance",
     "recovery": "Recovery Time",
     "battery": "Battery",
-    "esim": "eSIM Data"
+    "esim": "eSIM Data",
+    "noHorsesSelected": "No horses selected",
+    "selectHorsesToView": "Select horses to view dashboard",
+    "selectHorses": "Select Horses",
+    "changeSelection": "Change Selection",
+    "allHorses": "All Horses",
+    "selectedHorses": "selected horses",
+    "total": "total",
+    "average": "Average",
+    "maximum": "Maximum",
+    "allHorsesAverage": "All Horses Average",
+    "allHorsesMaximum": "All Horses Maximum",
+    "allHorsesTotal": "All Horses Total"
   },
   "horse": {
     "title": "Horse Profile",
@@ -139,6 +152,34 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "routeMap": {
+    "title": "Stable Location",
+    "selectRoutesToDisplay": "Select Routes to Display",
+    "showAllRoutes": "Show All Routes",
+    "routes": "Routes",
+    "totalHorses": "Total Horses",
+    "horsesMoving": "Horses Moving",
+    "kmRoute": "km Route",
+    "distance": "Distance",
+    "country": "Country",
+    "totalHorsesOnRoute": "Total Horses",
+    "activeHorses": "Active Horses",
+    "avgRouteProgress": "Avg. Route Progress",
+    "horsesOnRoute": "Horses on Route",
+    "noHorsesAssigned": "No horses assigned",
+    "route": "Route",
+    "status": "Status",
+    "hr": "HR",
+    "speed": "Speed",
+    "progress": "Progress",
+    "bpm": "bpm",
+    "kmh": "km/h",
+    "more": "more"
+  },
+  "trainingSchedule": {
+    "routeMap": "Route Map",
+    "viewOnMap": "View on Map"
+  },
   "common": {
     "loading": "Loading...",
     "save": "Save",
@@ -147,6 +188,7 @@
     "delete": "Delete",
     "close": "Close",
     "success": "Success",
-    "error": "Error"
+    "error": "Error",
+    "na": "N/A"
   }
 }
