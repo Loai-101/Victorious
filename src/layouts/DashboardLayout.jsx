@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApp } from '../context/AppContext'
@@ -16,47 +16,40 @@ const DashboardLayout = () => {
     navigate('/login')
   }
 
-  const menuItems = useMemo(() => {
-    const baseItems = [
-      { path: '/dashboard', label: t('nav.dashboard') },
-      { path: '/dashboard/schedule', label: t('nav.schedule') },
-      { path: '/dashboard/route-map', label: 'route map' },
-      { path: '/dashboard/alerts', label: t('nav.alerts') }
+  // Compute menu items directly - always includes alerts in baseItems
+  const baseItems = [
+    { path: '/dashboard', label: t('nav.dashboard') },
+    { path: '/dashboard/schedule', label: t('nav.schedule') },
+    { path: '/dashboard/route-map', label: 'route map' },
+    { path: '/dashboard/alerts', label: t('nav.alerts') }
+  ]
+
+  let menuItems = baseItems
+
+  if (user?.role === 'horse_owner') {
+    menuItems = [
+      ...baseItems,
+      { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' }
     ]
-
-    if (user?.role === 'horse_owner') {
-      return [
-        ...baseItems,
-        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' }
-      ]
+  } else if (user?.role === 'stable_manager') {
+    menuItems = [
+      ...baseItems,
+      { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
+      { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
+      { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
+    ]
+  } else if (user?.role === 'stable_owner' || user?.role === 'admin') {
+    menuItems = [
+      ...baseItems,
+      { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
+      { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
+      { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
+    ]
+    
+    if (user?.role === 'admin') {
+      menuItems.push({ path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' })
     }
-
-    if (user?.role === 'stable_manager') {
-      return [
-        ...baseItems,
-        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
-        { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
-        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
-      ]
-    }
-
-    if (user?.role === 'stable_owner' || user?.role === 'admin') {
-      const items = [
-        ...baseItems,
-        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
-        { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
-        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
-      ]
-      
-      if (user?.role === 'admin') {
-        items.push({ path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' })
-      }
-      
-      return items
-    }
-
-    return baseItems
-  }, [user?.role, t])
+  }
 
   return (
     <div className="flex h-screen bg-gray-100">
