@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "horses": "Horses",
+    "riders": "Riders",
+    "trainers": "Trainers",
+    "live": "Live Monitor",
+    "schedule": "Training Schedule",
+    "admin": "Admin Panel",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "landing": {
+    "title": "Victorious Horse Heart Rate Monitor Platform",
+    "subtitle": "Advanced monitoring for your horses' health and performance",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "free": "Free",
+    "pro": "Pro",
+    "enterprise": "Enterprise",
+    "month": "month",
+    "features": "Features",
+    "upgrade": "Upgrade",
+    "current": "Current Plan"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login",
+    "forgot": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "register": "Register"
+  },
+  "register": {
+    "title": "Register",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "country": "Country",
+    "city": "City",
+    "esimImage": "Upload eSIM Image",
+    "deviceIdImage": "Upload Device ID Image",
+    "barcodeImage": "Upload Barcode Image",
+    "submit": "Register",
+    "hasAccount": "Already have an account?",
+    "login": "Login",
+    "status": "Status",
+    "pending": "Pending",
+    "approved": "Approved"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "currentHr": "Current HR",
+    "maxHr": "Max HR",
+    "avgHr": "Avg HR",
+    "speed": "Speed",
+    "distance": "Distance",
+    "recovery": "Recovery Time",
+    "battery": "Battery",
+    "esim": "eSIM Data"
+  },
+  "horse": {
+    "title": "Horse Profile",
+    "name": "Name",
+    "age": "Age",
+    "breed": "Breed",
+    "feedType": "Feed Type",
+    "pastRaces": "Past Races",
+    "distanceCovered": "Distance Covered",
+    "changeFeed": "Change Feed Type",
+    "locked": "Feed type can only be changed every 15 days"
+  },
+  "rider": {
+    "title": "Rider Profile",
+    "name": "Name",
+    "age": "Age",
+    "weight": "Weight",
+    "height": "Height",
+    "experience": "Experience",
+    "teamName": "Team Name"
+  },
+  "trainer": {
+    "title": "Trainer Profile",
+    "name": "Name",
+    "specialization": "Specialization",
+    "experience": "Experience",
+    "contact": "Contact Info"
+  },
+  "schedule": {
+    "title": "Training Schedule",
+    "day": "Day",
+    "feed": "Feed",
+    "distance": "Distance",
+    "duration": "Duration",
+    "exercise": "Exercise",
+    "save": "Save Changes"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "deviceApproval": "Device Approval",
+    "users": "Users",
+    "horses": "Horses",
+    "batteryMonitoring": "Battery Monitoring",
+    "approve": "Approve",
+    "reject": "Reject",
+    "status": "Status"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "success": "Success",
+    "error": "Error"
+  }
+}

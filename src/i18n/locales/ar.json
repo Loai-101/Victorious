@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "pricing": "الأسعار",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "dashboard": "لوحة التحكم",
+    "horses": "الخيول",
+    "riders": "الفرسان",
+    "trainers": "المدربون",
+    "live": "المراقبة المباشرة",
+    "schedule": "جدول التدريب",
+    "admin": "لوحة الإدارة",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج"
+  },
+  "landing": {
+    "title": "منصة مراقبة معدل ضربات قلب الخيل Victorious",
+    "subtitle": "مراقبة متقدمة لصحة وأداء خيولك",
+    "getStarted": "ابدأ الآن",
+    "learnMore": "اعرف المزيد"
+  },
+  "pricing": {
+    "title": "اختر خطتك",
+    "free": "مجاني",
+    "pro": "احترافي",
+    "enterprise": "المؤسسات",
+    "month": "شهرياً",
+    "features": "المميزات",
+    "upgrade": "ترقية",
+    "current": "الخطة الحالية"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "forgot": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "register": "التسجيل"
+  },
+  "register": {
+    "title": "التسجيل",
+    "fullName": "الاسم الكامل",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "country": "الدولة",
+    "city": "المدينة",
+    "esimImage": "رفع صورة eSIM",
+    "deviceIdImage": "رفع صورة معرف الجهاز",
+    "barcodeImage": "رفع صورة الباركود",
+    "submit": "التسجيل",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+    "status": "الحالة",
+    "pending": "قيد الانتظار",
+    "approved": "موافق عليه"
+  },
+  "dashboard": {
+    "welcome": "مرحباً",
+    "currentHr": "معدل النبض الحالي",
+    "maxHr": "أقصى معدل",
+    "avgHr": "متوسط المعدل",
+    "speed": "السرعة",
+    "distance": "المسافة",
+    "recovery": "وقت التعافي",
+    "battery": "البطارية",
+    "esim": "بيانات eSIM"
+  },
+  "horse": {
+    "title": "ملف الحصان",
+    "name": "الاسم",
+    "age": "العمر",
+    "breed": "السلالة",
+    "feedType": "نوع العلف",
+    "pastRaces": "السباقات السابقة",
+    "distanceCovered": "المسافة المقطوعة",
+    "changeFeed": "تغيير نوع العلف",
+    "locked": "يمكن تغيير نوع العلف كل 15 يوم فقط"
+  },
+  "rider": {
+    "title": "ملف الفارس",
+    "name": "الاسم",
+    "age": "العمر",
+    "weight": "الوزن",
+    "height": "الطول",
+    "experience": "الخبرة",
+    "teamName": "اسم الفريق"
+  },
+  "trainer": {
+    "title": "ملف المدرب",
+    "name": "الاسم",
+    "specialization": "التخصص",
+    "experience": "الخبرة",
+    "contact": "معلومات الاتصال"
+  },
+  "schedule": {
+    "title": "جدول التدريب",
+    "day": "اليوم",
+    "feed": "العلف",
+    "distance": "المسافة",
+    "duration": "المدة",
+    "exercise": "التمرين",
+    "save": "حفظ التغييرات"
+  },
+  "admin": {
+    "title": "لوحة الإدارة",
+    "deviceApproval": "الموافقة على الأجهزة",
+    "users": "المستخدمون",
+    "horses": "الخيول",
+    "batteryMonitoring": "مراقبة البطارية",
+    "approve": "موافق",
+    "reject": "رفض",
+    "status": "الحالة"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "close": "إغلاق",
+    "success": "نجح",
+    "error": "خطأ"
+  }
+}

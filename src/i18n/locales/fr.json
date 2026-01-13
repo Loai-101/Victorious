@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "pricing": "Tarifs",
+    "login": "Connexion",
+    "register": "Inscription",
+    "dashboard": "Tableau de bord",
+    "horses": "Chevaux",
+    "riders": "Cavaliers",
+    "trainers": "Entraîneurs",
+    "live": "Surveillance en direct",
+    "schedule": "Calendrier d'entraînement",
+    "admin": "Panneau d'administration",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "landing": {
+    "title": "Plateforme de surveillance de la fréquence cardiaque des chevaux Victorious",
+    "subtitle": "Surveillance avancée de la santé et des performances de vos chevaux",
+    "getStarted": "Commencer",
+    "learnMore": "En savoir plus"
+  },
+  "pricing": {
+    "title": "Choisissez votre forfait",
+    "free": "Gratuit",
+    "pro": "Pro",
+    "enterprise": "Entreprise",
+    "month": "mois",
+    "features": "Fonctionnalités",
+    "upgrade": "Mettre à niveau",
+    "current": "Forfait actuel"
+  },
+  "login": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "forgot": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "register": "S'inscrire"
+  },
+  "register": {
+    "title": "Inscription",
+    "fullName": "Nom complet",
+    "phone": "Téléphone",
+    "email": "Email",
+    "country": "Pays",
+    "city": "Ville",
+    "esimImage": "Télécharger l'image eSIM",
+    "deviceIdImage": "Télécharger l'image ID du dispositif",
+    "barcodeImage": "Télécharger l'image du code-barres",
+    "submit": "S'inscrire",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+    "status": "Statut",
+    "pending": "En attente",
+    "approved": "Approuvé"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "currentHr": "FC actuelle",
+    "maxHr": "FC max",
+    "avgHr": "FC moyenne",
+    "speed": "Vitesse",
+    "distance": "Distance",
+    "recovery": "Temps de récupération",
+    "battery": "Batterie",
+    "esim": "Données eSIM"
+  },
+  "horse": {
+    "title": "Profil du cheval",
+    "name": "Nom",
+    "age": "Âge",
+    "breed": "Race",
+    "feedType": "Type d'alimentation",
+    "pastRaces": "Courses passées",
+    "distanceCovered": "Distance parcourue",
+    "changeFeed": "Changer le type d'alimentation",
+    "locked": "Le type d'alimentation ne peut être changé que tous les 15 jours"
+  },
+  "rider": {
+    "title": "Profil du cavalier",
+    "name": "Nom",
+    "age": "Âge",
+    "weight": "Poids",
+    "height": "Taille",
+    "experience": "Expérience",
+    "teamName": "Nom de l'équipe"
+  },
+  "trainer": {
+    "title": "Profil de l'entraîneur",
+    "name": "Nom",
+    "specialization": "Spécialisation",
+    "experience": "Expérience",
+    "contact": "Informations de contact"
+  },
+  "schedule": {
+    "title": "Calendrier d'entraînement",
+    "day": "Jour",
+    "feed": "Alimentation",
+    "distance": "Distance",
+    "duration": "Durée",
+    "exercise": "Exercice",
+    "save": "Enregistrer les modifications"
+  },
+  "admin": {
+    "title": "Panneau d'administration",
+    "deviceApproval": "Approbation des dispositifs",
+    "users": "Utilisateurs",
+    "horses": "Chevaux",
+    "batteryMonitoring": "Surveillance de la batterie",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "status": "Statut"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "success": "Succès",
+    "error": "Erreur"
+  }
+}
