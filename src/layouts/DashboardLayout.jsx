@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApp } from '../context/AppContext'
@@ -16,11 +16,12 @@ const DashboardLayout = () => {
     navigate('/login')
   }
 
-  const getMenuItems = () => {
+  const menuItems = useMemo(() => {
     const baseItems = [
       { path: '/dashboard', label: t('nav.dashboard') },
       { path: '/dashboard/schedule', label: t('nav.schedule') },
-      { path: '/dashboard/route-map', label: 'route map' }
+      { path: '/dashboard/route-map', label: 'route map' },
+      { path: '/dashboard/alerts', label: t('nav.alerts') }
     ]
 
     if (user?.role === 'horse_owner') {
@@ -40,26 +41,22 @@ const DashboardLayout = () => {
     }
 
     if (user?.role === 'stable_owner' || user?.role === 'admin') {
-      return [
+      const items = [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
         { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
       ]
-    }
-
-    if (user?.role === 'admin') {
-      return [
-        ...baseItems,
-        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
-        { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
-        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' },
-        { path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' }
-      ]
+      
+      if (user?.role === 'admin') {
+        items.push({ path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' })
+      }
+      
+      return items
     }
 
     return baseItems
-  }
+  }, [user?.role, t])
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -85,10 +82,11 @@ const DashboardLayout = () => {
         </div>
         
         <nav className="p-4 space-y-2">
-          {getMenuItems().map((item) => {
+          {menuItems.map((item) => {
             const isActive = location.pathname === item.path || 
               (item.path === '/dashboard' && location.pathname === '/dashboard/live') ||
-              (item.path === '/dashboard/route-map' && location.pathname.startsWith('/dashboard/route-map'))
+              (item.path === '/dashboard/route-map' && location.pathname.startsWith('/dashboard/route-map')) ||
+              (item.path === '/dashboard/alerts' && location.pathname.startsWith('/dashboard/alerts'))
             return (
               <Link
                 key={item.path}

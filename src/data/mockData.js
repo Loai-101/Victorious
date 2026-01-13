@@ -753,3 +753,96 @@ export const feedTypes = [
   'Oats',
   'Barley'
 ]
+
+// Alert types for horses
+const alertTypes = [
+  'High Heart Rate',
+  'Low Heart Rate',
+  'Battery Low',
+  'Connection Lost',
+  'Speed Alert',
+  'Recovery Time Alert',
+  'Health Status Alert',
+  'Device Malfunction',
+  'Irregular Heart Rate',
+  'Temperature Alert'
+]
+
+const alertSeverities = ['Critical', 'High', 'Medium', 'Low']
+const alertStatuses = ['Active', 'Resolved', 'Acknowledged']
+
+// Generate mock alerts for horses
+export const mockAlerts = Array.from({ length: 150 }, (_, i) => {
+  const horseIndex = i % mockHorses.length
+  const horse = mockHorses[horseIndex]
+  const alertTypeIndex = i % alertTypes.length
+  const severityIndex = i % alertSeverities.length
+  const statusIndex = i % alertStatuses.length
+  
+  // Generate timestamp (alerts from last 30 days)
+  const daysAgo = i % 30
+  const hoursAgo = (i * 3) % 24
+  const minutesAgo = (i * 7) % 60
+  const alertDate = new Date(Date.now() - (daysAgo * 24 * 60 * 60 * 1000) - (hoursAgo * 60 * 60 * 1000) - (minutesAgo * 60 * 1000))
+  
+  // Generate alert message based on type
+  let message = ''
+  let value = null
+  
+  switch (alertTypes[alertTypeIndex]) {
+    case 'High Heart Rate':
+      value = 180 + (i % 40)
+      message = `Heart rate elevated to ${value} bpm (Normal: 30-120 bpm)`
+      break
+    case 'Low Heart Rate':
+      value = 25 + (i % 10)
+      message = `Heart rate dropped to ${value} bpm (Normal: 30-120 bpm)`
+      break
+    case 'Battery Low':
+      value = 5 + (i % 15)
+      message = `Device battery at ${value}% - Please recharge soon`
+      break
+    case 'Connection Lost':
+      message = `Lost connection with device for ${15 + (i % 45)} minutes`
+      break
+    case 'Speed Alert':
+      value = (35 + (i % 15)).toFixed(1)
+      message = `Unusual speed detected: ${value} km/h`
+      break
+    case 'Recovery Time Alert':
+      value = 8 + (i % 10)
+      message = `Recovery time extended to ${value} minutes (Normal: 2-5 min)`
+      break
+    case 'Health Status Alert':
+      message = `Health status changed to: ${horse.status}`
+      break
+    case 'Device Malfunction':
+      message = `Device sensor malfunction detected - Please check device`
+      break
+    case 'Irregular Heart Rate':
+      message = `Irregular heart rate pattern detected - Possible arrhythmia`
+      break
+    case 'Temperature Alert':
+      value = 38.5 + ((i % 10) / 10)
+      message = `Body temperature elevated: ${value.toFixed(1)}°C`
+      break
+    default:
+      message = `Alert detected for ${horse.name}`
+  }
+  
+  return {
+    id: i + 1,
+    horseId: horse.id,
+    horseName: horse.name,
+    alertType: alertTypes[alertTypeIndex],
+    severity: alertSeverities[severityIndex],
+    status: alertStatuses[statusIndex],
+    message: message,
+    value: value,
+    timestamp: alertDate.toISOString(),
+    createdAt: alertDate.toISOString().split('T')[0],
+    createdAtTime: alertDate.toTimeString().split(' ')[0].substring(0, 5),
+    resolvedAt: statusIndex > 0 ? new Date(alertDate.getTime() + (1 + (i % 24)) * 60 * 60 * 1000).toISOString() : null,
+    acknowledgedBy: statusIndex > 0 ? ['Admin', 'Trainer', 'Veterinarian'][i % 3] : null
+  }
+}).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sort by most recent first

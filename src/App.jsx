@@ -17,6 +17,7 @@ import AdminPanel from './pages/AdminPanel'
 import HorsesList from './pages/HorsesList'
 import RidersList from './pages/RidersList'
 import RouteMap from './pages/RouteMap'
+import AlertsPage from './pages/AlertsPage'
 
 function AppContent() {
   const { i18n } = useTranslation()
@@ -45,6 +46,7 @@ function AppContent() {
           <Route path="trainers/:id" element={<TrainerProfile />} />
           <Route path="schedule" element={<TrainingSchedule />} />
           <Route path="route-map" element={<RouteMap />} />
+          <Route path="alerts" element={<AlertsPage />} />
           <Route path="admin" element={<AdminPanel />} />
         </Route>
       </Routes>
