@@ -49,7 +49,7 @@ const LoginPage = () => {
     <div 
       className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
       style={{
-        backgroundImage: 'url(https://res.cloudinary.com/dvybb2xnc/image/upload/v1768286877/%D8%AE%D9%84%D9%81%D9%8A%D8%A9_%D8%B4%D8%A7%D8%B4%D8%A9_%D8%B3%D8%B7%D8%AD_%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8_%D9%85%D8%B1%D8%AD%D8%A9_%D9%88%D8%BA%D8%B1%D9%8A%D8%A8%D8%A9_%D8%AA%D8%AF%D8%B1%D8%AC%D8%A7%D8%AA_%D8%A3%D9%84%D9%88%D8%A7%D9%86_%D8%A8%D8%B1%D8%AA%D9%82%D8%A7%D9%84%D9%8A_u44my5.png)',
+        backgroundImage: 'url(https://res.cloudinary.com/dvybb2xnc/image/upload/v1768717740/WhatsApp_Image_2026-01-15_at_3.35.18_PM_kjvkts.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
