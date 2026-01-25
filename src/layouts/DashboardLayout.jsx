@@ -29,12 +29,14 @@ const DashboardLayout = () => {
     if (user?.role === 'horse_owner') {
     menuItems = [
         ...baseItems,
-        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' }
+        { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
+        { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' }
       ]
   } else if (user?.role === 'stable_manager') {
     menuItems = [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
+        { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
         { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
       ]
@@ -42,6 +44,7 @@ const DashboardLayout = () => {
     menuItems = [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
+        { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
         { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
       ]
@@ -79,7 +82,8 @@ const DashboardLayout = () => {
             const isActive = location.pathname === item.path || 
               (item.path === '/dashboard' && location.pathname === '/dashboard/live') ||
               (item.path === '/dashboard/route-map' && location.pathname.startsWith('/dashboard/route-map')) ||
-              (item.path === '/dashboard/alerts' && location.pathname.startsWith('/dashboard/alerts'))
+              (item.path === '/dashboard/alerts' && location.pathname.startsWith('/dashboard/alerts')) ||
+              (item.path === '/dashboard/horses/medical' && location.pathname === '/dashboard/horses/medical')
             return (
               <Link
                 key={item.path}

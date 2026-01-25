@@ -18,6 +18,7 @@ import HorsesList from './pages/HorsesList'
 import RidersList from './pages/RidersList'
 import RouteMap from './pages/RouteMap'
 import AlertsPage from './pages/AlertsPage'
+import HorseMedicalPage from './pages/HorseMedicalPage'
 
 function AppContent() {
   const { i18n } = useTranslation()
@@ -41,6 +42,7 @@ function AppContent() {
           <Route path="live" element={<LiveDashboard />} />
           <Route path="horses" element={<HorsesList />} />
           <Route path="horses/:id" element={<HorseProfile />} />
+          <Route path="horses/medical" element={<HorseMedicalPage />} />
           <Route path="riders" element={<RidersList />} />
           <Route path="riders/:id" element={<RiderProfile />} />
           <Route path="trainers/:id" element={<TrainerProfile />} />
