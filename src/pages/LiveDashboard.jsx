@@ -8,7 +8,20 @@ import { useApp } from '../context/AppContext'
 import { useLiveData } from '../context/LiveDataContext'
 import UpgradeModal from '../components/UpgradeModal'
 
-const colors = ['#dc2626', '#ef4444', '#f87171', '#991b1b', '#b91c1c', '#dc2626', '#fca5a5', '#fee2e2']
+// Vibrant gradient colors for charts
+const colors = [
+  'url(#gradient1)', 'url(#gradient2)', 'url(#gradient3)', 'url(#gradient4)',
+  'url(#gradient5)', 'url(#gradient6)', 'url(#gradient7)', 'url(#gradient8)'
+]
+
+const solidColors = [
+  '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#a29bfe'
+]
+
+const pieColors = [
+  '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#a29bfe',
+  '#fd79a8', '#fdcb6e', '#e17055', '#00b894', '#00cec9', '#0984e3', '#6c5ce7', '#a29bfe'
+]
 
 const LiveDashboard = () => {
   const { t } = useTranslation()
@@ -371,7 +384,7 @@ const LiveDashboard = () => {
     ]
   }, [horsesData.length, allHorsesData.length])
 
-  const PIE_COLORS = ['#dc2626', '#ef4444', '#f87171', '#991b1b', '#b91c1c', '#fca5a5', '#fee2e2', '#dc2626']
+  const PIE_COLORS = pieColors
 
   const stats = getCombinedStats()
   const heartRateHistory = getCombinedHeartRateHistory()
@@ -392,7 +405,7 @@ const LiveDashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">
           {t('dashboard.welcome')}, {user?.name}
@@ -416,453 +429,798 @@ const LiveDashboard = () => {
 
       {/* Selected Horses List */}
       {horsesData.length > 0 && (
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="flex flex-wrap gap-2">
+        <div className="card-3d bg-gradient-to-r from-red-50 via-pink-50 to-purple-50 p-4 rounded-xl shadow-lg border border-pink-200">
+          <div className="flex flex-wrap gap-3">
             {horsesData.map(({ horse, liveData }, idx) => (
               <div
                 key={horse.id}
-                className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium"
+                className="px-4 py-2 bg-gradient-to-r from-red-400 to-pink-500 text-white rounded-full text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
               >
-                {horse.name} ({t('dashboard.currentHr')}: <span className={getHRColor(horse.currentHr, horse.speed, horse.status)}>{horse.currentHr || t('common.na')}</span> {t('routeMap.bpm')})
+                {horse.name} ({t('dashboard.currentHr')}: <span className="font-bold">{horse.currentHr || t('common.na')}</span> {t('routeMap.bpm')})
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.currentHr')}</div>
+      {/* Gradient Definitions for SVG */}
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <linearGradient id="gradient1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#ff6b6b" />
+            <stop offset="100%" stopColor="#ee5a6f" />
+          </linearGradient>
+          <linearGradient id="gradient2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#4ecdc4" />
+            <stop offset="100%" stopColor="#44a08d" />
+          </linearGradient>
+          <linearGradient id="gradient3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#45b7d1" />
+            <stop offset="100%" stopColor="#96c93d" />
+          </linearGradient>
+          <linearGradient id="gradient4" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#f9ca24" />
+            <stop offset="100%" stopColor="#f0932b" />
+          </linearGradient>
+          <linearGradient id="gradient5" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#f0932b" />
+            <stop offset="100%" stopColor="#eb4d4b" />
+          </linearGradient>
+          <linearGradient id="gradient6" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#6c5ce7" />
+            <stop offset="100%" stopColor="#a29bfe" />
+          </linearGradient>
+          <linearGradient id="gradient7" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#fd79a8" />
+            <stop offset="100%" stopColor="#fdcb6e" />
+          </linearGradient>
+          <linearGradient id="gradient8" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#00b894" />
+            <stop offset="100%" stopColor="#00cec9" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Stats Cards with 3D Effects - Red Theme */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="card-3d bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.currentHr')}</div>
           {stats.currentHr === null || stats.currentHr === undefined ? (
-            <div className="text-3xl font-bold text-gray-400">{t('common.na')}</div>
+            <div className="text-4xl font-bold opacity-75">{t('common.na')}</div>
           ) : (
             <>
-              <div className={`text-3xl font-bold ${getHRColor(stats.currentHr, stats.speed, stats.status)}`}>
-                {stats.currentHr} bpm
+              <div className="text-4xl font-bold text-white">
+                {stats.currentHr} <span className="text-2xl">bpm</span>
               </div>
               {(horsesData.length === 0 || horsesData.length > 1) && (
-                <div className="text-xs text-gray-500 mt-1">
+                <div className="text-xs opacity-80 mt-2">
                   {horsesData.length === 0 ? t('dashboard.allHorsesAverage') : t('dashboard.average')}
                 </div>
               )}
             </>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.maxHr')}</div>
-          <div className="text-3xl font-bold text-red-600">{stats.maxHr} bpm</div>
+        <div className="card-3d bg-gradient-to-br from-red-400 via-red-500 to-red-600 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.maxHr')}</div>
+          <div className="text-4xl font-bold">{stats.maxHr} <span className="text-2xl">bpm</span></div>
           {(horsesData.length === 0 || horsesData.length > 1) && (
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs opacity-80 mt-2">
               {horsesData.length === 0 ? t('dashboard.allHorsesMaximum') : t('dashboard.maximum')}
             </div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.avgHr')}</div>
-          <div className="text-3xl font-bold text-green-600">{stats.avgHr} bpm</div>
+        <div className="card-3d bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.avgHr')}</div>
+          <div className="text-4xl font-bold">{stats.avgHr} <span className="text-2xl">bpm</span></div>
           {horsesData.length > 1 && (
-            <div className="text-xs text-gray-500 mt-1">Average</div>
+            <div className="text-xs opacity-80 mt-2">Average</div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.speed')}</div>
+        <div className="card-3d bg-gradient-to-br from-red-600 via-red-700 to-red-800 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.speed')}</div>
           {stats.speed === null || stats.speed === undefined || stats.status === 'resting' ? (
-            <div className="text-3xl font-bold text-gray-400">{t('common.na')}</div>
+            <div className="text-4xl font-bold opacity-75">{t('common.na')}</div>
           ) : (
-            <div className="text-3xl font-bold text-purple-600">{stats.speed.toFixed(1)} km/h</div>
+            <div className="text-4xl font-bold">{stats.speed.toFixed(1)} <span className="text-2xl">km/h</span></div>
           )}
           {(horsesData.length === 0 || horsesData.length > 1) && stats.speed !== null && (
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs opacity-80 mt-2">
               {horsesData.length === 0 ? t('dashboard.allHorsesAverage') : t('dashboard.average')}
             </div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.distance')}</div>
-          <div className="text-3xl font-bold text-red-600">{stats.distance.toFixed(1)} km</div>
+        <div className="card-3d bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.distance')}</div>
+          <div className="text-4xl font-bold">{stats.distance.toFixed(1)} <span className="text-2xl">km</span></div>
           {(horsesData.length === 0 || horsesData.length > 1) && (
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs opacity-80 mt-2">
               {horsesData.length === 0 ? t('dashboard.allHorsesTotal') : t('dashboard.total')}
             </div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.recovery')}</div>
-          <div className="text-3xl font-bold text-orange-600">{stats.recoveryTime} min</div>
+        <div className="card-3d bg-gradient-to-br from-red-400 via-red-500 to-red-600 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.recovery')}</div>
+          <div className="text-4xl font-bold">{stats.recoveryTime} <span className="text-2xl">min</span></div>
           {horsesData.length > 1 && (
-            <div className="text-xs text-gray-500 mt-1">Average</div>
+            <div className="text-xs opacity-80 mt-2">Average</div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.battery')}</div>
-          <div className="text-3xl font-bold text-yellow-600">{stats.battery}%</div>
+        <div className="card-3d bg-gradient-to-br from-red-600 via-red-700 to-red-800 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.battery')}</div>
+          <div className="text-4xl font-bold">{stats.battery}%</div>
           {horsesData.length > 1 && (
-            <div className="text-xs text-gray-500 mt-1">Average</div>
+            <div className="text-xs opacity-80 mt-2">Average</div>
           )}
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">{t('dashboard.esim')}</div>
-          <div className="text-3xl font-bold text-teal-600">{stats.esimData}%</div>
+        <div className="card-3d bg-gradient-to-br from-red-500 via-red-600 to-red-700 p-6 rounded-xl text-white transform transition-all duration-300">
+          <div className="text-sm opacity-90 mb-2 font-medium">{t('dashboard.esim')}</div>
+          <div className="text-4xl font-bold">{stats.esimData}%</div>
           {horsesData.length > 1 && (
-            <div className="text-xs text-gray-500 mt-1">Average</div>
+            <div className="text-xs opacity-80 mt-2">Average</div>
           )}
         </div>
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Heart Rate Over Time</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={heartRateHistory}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              {horsesData.length === 0 ? (
-                <Line
-                  type="monotone"
-                  dataKey="avgHR"
-                  name={t('dashboard.allHorsesAverage')}
-                  stroke={colors[0]}
-                  strokeWidth={2}
+      {/* Performance Charts - Professional Style */}
+      <div className="space-y-8">
+        {/* Heart Rate Over Time */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Heart Rate Over Time</h2>
+          <div className="chart-glow">
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={heartRateHistory} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis 
+                  dataKey="time" 
+                  stroke="#374151"
+                  tick={{ fill: '#374151', fontSize: 11 }}
+                  tickLine={{ stroke: '#374151' }}
+                  label={{ value: 'Time', position: 'insideBottom', offset: -10, fill: '#374151', style: { fontSize: '12px' } }}
                 />
-              ) : (
-                horsesData.map(({ liveData }, idx) => (
+                <YAxis 
+                  stroke="#374151"
+                  tick={{ fill: '#374151', fontSize: 11 }}
+                  tickLine={{ stroke: '#374151' }}
+                  label={{ value: 'Heart Rate (bpm)', angle: -90, position: 'insideLeft', fill: '#374151', style: { fontSize: '12px' } }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#ffffff', 
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    padding: '8px 12px'
+                  }}
+                  labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                />
+                <Legend wrapperStyle={{ paddingTop: '15px', fontSize: '12px' }} />
+                {horsesData.length === 0 ? (
                   <Line
-                    key={liveData.horseId}
                     type="monotone"
-                    dataKey={`hr_${liveData.horseId}`}
-                    name={liveData.horseName}
-                    stroke={colors[idx % colors.length]}
+                    dataKey="avgHR"
+                    name={t('dashboard.allHorsesAverage')}
+                    stroke="#dc2626"
                     strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4, fill: '#dc2626' }}
                   />
-                ))
-              )}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Speed vs Heart Rate</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <ScatterChart>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="speed" name="Speed" unit=" km/h" />
-              <YAxis dataKey="hr" name="Heart Rate" unit=" bpm" />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-              {horsesData.length === 0 ? (
-                <Scatter
-                  name={t('dashboard.allHorses')}
-                  data={allHorsesData.slice(0, 50).map(horse => ({
-                    speed: horse.speed || 0,
-                    hr: horse.currentHr || 0
-                  })).filter(d => d.speed > 0 && d.hr > 0)}
-                  fill={colors[0]}
-                />
-              ) : (
-                getHorsesForCharts().map(({ liveData }, idx) => (
-                  <Scatter
-                    key={liveData.horseId}
-                    name={liveData.horseName}
-                    data={liveData.speedHistory}
-                    fill={colors[idx % colors.length]}
-                  />
-                ))
-              )}
-            </ScatterChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Recovery Time</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              {horsesData.length === 0 ? (
-                <Line
-                  type="monotone"
-                  data={Array.from({ length: 20 }, (_, i) => ({
-                    day: i + 1,
-                    time: Math.round(stats.recoveryTime + (Math.random() * 5 - 2.5))
-                  }))}
-                  dataKey="time"
-                  name={t('dashboard.allHorsesAverage')}
-                  stroke={colors[0]}
-                  strokeWidth={2}
-                />
-              ) : (
-                getHorsesForCharts().slice(0, 10).map(({ liveData }, idx) => (
-                  <Line
-                    key={liveData.horseId}
-                    type="monotone"
-                    data={liveData.recoveryHistory}
-                    dataKey="time"
-                    name={liveData.horseName}
-                    stroke={colors[idx % colors.length]}
-                    strokeWidth={2}
-                  />
-                ))
-              )}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">stable location</h2>
-          <div style={{ height: '300px', width: '100%' }}>
-            <MapContainer
-              center={mapCenter}
-              zoom={horsesData.length === 0 ? 5 : horsesData.length > 1 ? 10 : 13}
-              style={{ height: '100%', width: '100%' }}
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
-              {horsesData.length === 0 ? (
-                // Show sample routes for all horses view (limited to 20 for performance)
-                allHorsesData.slice(0, 20).map((horse, idx) => {
-                  const sampleRoute = Array.from({ length: 10 }, (_, i) => [
-                    (horse.location?.lat || 40.7128) + (Math.random() * 0.01 - 0.005),
-                    (horse.location?.lng || -74.0060) + (Math.random() * 0.01 - 0.005)
-                  ])
-                  return (
-                    <Polyline
-                      key={horse.id}
-                      positions={sampleRoute}
-                      color={colors[idx % colors.length]}
-                      weight={1}
-                      opacity={0.3}
-                    />
-                  )
-                })
-              ) : (
-                getHorsesForCharts().map(({ liveData }, idx) => (
-                  <React.Fragment key={liveData.horseId}>
-                    <Polyline
-                      positions={liveData.route}
-                      color={colors[idx % colors.length]}
-                      weight={3}
-                      opacity={1}
-                    />
-                    {liveData.route.length > 0 && (
-                      <>
-                        <Marker position={liveData.route[0]}>
-                          <Popup>
-                            <strong>{liveData.horseName}</strong><br />
-                            Start
-                          </Popup>
-                        </Marker>
-                        <Marker position={liveData.route[liveData.route.length - 1]}>
-                          <Popup>
-                            <strong>{liveData.horseName}</strong><br />
-                            End
-                          </Popup>
-                        </Marker>
-                      </>
-                    )}
-                  </React.Fragment>
-                ))
-              )}
-            </MapContainer>
+                ) : (
+                  horsesData.map(({ liveData }, idx) => {
+                    const color = solidColors[idx % solidColors.length]
+                    return (
+                      <Line
+                        key={liveData.horseId}
+                        type="monotone"
+                        dataKey={`hr_${liveData.horseId}`}
+                        name={liveData.horseName}
+                        stroke={color}
+                        strokeWidth={2}
+                        dot={false}
+                        activeDot={{ r: 4, fill: color }}
+                      />
+                    )
+                  })
+                )}
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
+
+        {/* Speed vs Heart Rate - Dual Y-Axis */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Speed vs Heart Rate</h2>
+          <div className="chart-glow">
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart 
+                data={horsesData.length === 0 
+                  ? allHorsesData.slice(0, 30).map((horse, idx) => ({
+                      time: idx,
+                      speed: horse.speed || 0,
+                      hr: horse.currentHr || 0
+                    })).filter(d => d.speed > 0 && d.hr > 0)
+                  : getHorsesForCharts().flatMap(({ liveData }) => 
+                      liveData.speedHistory.map((point, idx) => ({
+                        time: idx,
+                        speed: point.speed,
+                        hr: point.hr
+                      }))
+                    )
+                }
+                margin={{ top: 10, right: 30, left: 20, bottom: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis 
+                  dataKey="time" 
+                  stroke="#374151"
+                  tick={{ fill: '#374151', fontSize: 11 }}
+                  tickLine={{ stroke: '#374151' }}
+                  label={{ value: 'Time', position: 'insideBottom', offset: -10, fill: '#374151', style: { fontSize: '12px' } }}
+                />
+                <YAxis 
+                  yAxisId="left"
+                  stroke="#3b82f6"
+                  tick={{ fill: '#3b82f6', fontSize: 11 }}
+                  tickLine={{ stroke: '#3b82f6' }}
+                  label={{ value: 'Speed (km/h)', angle: -90, position: 'insideLeft', fill: '#3b82f6', style: { fontSize: '12px' } }}
+                />
+                <YAxis 
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#dc2626"
+                  tick={{ fill: '#dc2626', fontSize: 11 }}
+                  tickLine={{ stroke: '#dc2626' }}
+                  label={{ value: 'Heart Rate (bpm)', angle: 90, position: 'insideRight', fill: '#dc2626', style: { fontSize: '12px' } }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#ffffff', 
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    padding: '8px 12px'
+                  }}
+                  labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                />
+                <Legend wrapperStyle={{ paddingTop: '15px', fontSize: '12px' }} />
+                <Line 
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="speed"
+                  name="Speed (km/h)"
+                  stroke="#3b82f6"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 4, fill: '#3b82f6' }}
+                />
+                <Line 
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="hr"
+                  name="Heart Rate (bpm)"
+                  stroke="#dc2626"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 4, fill: '#dc2626' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Recovery Time */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4 text-black">Recovery Time</h2>
+          <div className="chart-glow">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart 
+                data={horsesData.length === 0 
+                  ? Array.from({ length: 20 }, (_, i) => ({
+                      day: i + 1,
+                      time: Math.round(stats.recoveryTime + (Math.random() * 5 - 2.5))
+                    }))
+                  : getHorsesForCharts()[0]?.liveData.recoveryHistory || []
+                }
+                margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+              >
+                <defs>
+                  <linearGradient id="recoveryGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#f9ca24" stopOpacity={0.4} />
+                    <stop offset="50%" stopColor="#f9ca24" stopOpacity={0.2} />
+                    <stop offset="100%" stopColor="#f9ca24" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" opacity={0.5} />
+                <XAxis 
+                  dataKey="day" 
+                  stroke="#6b7280"
+                  tick={{ fill: '#6b7280', fontSize: 12 }}
+                  tickLine={{ stroke: '#6b7280' }}
+                  label={{ value: 'Day', position: 'insideBottom', offset: -5, fill: '#6b7280' }}
+                />
+                <YAxis 
+                  stroke="#6b7280"
+                  tick={{ fill: '#6b7280', fontSize: 12 }}
+                  tickLine={{ stroke: '#6b7280' }}
+                  label={{ value: 'Recovery Time (min)', angle: -90, position: 'insideLeft', fill: '#6b7280' }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    padding: '10px'
+                  }}
+                  labelStyle={{ color: '#374151', fontWeight: 'bold', marginBottom: '5px' }}
+                />
+                <Legend 
+                  wrapperStyle={{ paddingTop: '10px' }}
+                  iconType="line"
+                />
+                {horsesData.length === 0 ? (
+                  <>
+                    <Area
+                      type="monotone"
+                      dataKey="time"
+                      stroke="none"
+                      fill="url(#recoveryGradient)"
+                      fillOpacity={0.6}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="time"
+                      name={t('dashboard.allHorsesAverage')}
+                      stroke="#f9ca24"
+                      strokeWidth={2.5}
+                      dot={false}
+                      activeDot={{ r: 5, fill: '#f9ca24', stroke: '#fff', strokeWidth: 2 }}
+                    />
+                  </>
+                ) : (
+                  getHorsesForCharts().slice(0, 10).map(({ liveData }, idx) => {
+                    const color = solidColors[idx % solidColors.length]
+                    return (
+                      <Line
+                        key={liveData.horseId}
+                        type="monotone"
+                        data={liveData.recoveryHistory}
+                        dataKey="time"
+                        name={liveData.horseName}
+                        stroke={color}
+                        strokeWidth={2.5}
+                        dot={false}
+                        activeDot={{ r: 5, fill: color, stroke: '#fff', strokeWidth: 2 }}
+                      />
+                    )
+                  })
+                )}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
       </div>
 
       {/* Additional Statistics and Charts */}
       <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-6">Horse Statistics & Analytics</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Horse Statistics & Analytics</h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Age Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Age Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={ageDistribution}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="value" fill="#dc2626" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Age Distribution</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={ageDistribution} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="name" 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <YAxis 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                    label={{ value: 'Number of Horses', angle: -90, position: 'insideLeft', fill: '#374151', style: { fontSize: '12px' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#6c5ce7" 
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Status Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Status Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Status Distribution</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
               <PieChart>
-                <Pie
-                  data={statusDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {statusDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+                  <Pie
+                    data={statusDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={90}
+                    innerRadius={25}
+                    fill="#8884d8"
+                    dataKey="value"
+                    stroke="#fff"
+                    strokeWidth={1.5}
+                    paddingAngle={1}
+                  >
+                    {statusDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Breed Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Top Breeds</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={breedDistribution} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="name" type="category" width={100} />
-                <Tooltip />
-                <Bar dataKey="value" fill="#dc2626" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Top Breeds</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={breedDistribution} layout="vertical" margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    type="number" 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <YAxis 
+                    dataKey="name" 
+                    type="category" 
+                    width={100} 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#45b7d1" 
+                    radius={[0, 4, 4, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Country Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Horses by Country</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={countryDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {countryDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Horses by Country</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={countryDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={90}
+                    innerRadius={25}
+                    fill="#8884d8"
+                    dataKey="value"
+                    stroke="#fff"
+                    strokeWidth={1.5}
+                    paddingAngle={1}
+                  >
+                    {countryDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Battery Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Battery Level Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={batteryDistribution}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="value" fill="#dc2626" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Battery Level Distribution</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={batteryDistribution} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="name" 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <YAxis 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                    label={{ value: 'Number of Horses', angle: -90, position: 'insideLeft', fill: '#374151', style: { fontSize: '12px' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#f9ca24" 
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Average HR by Breed */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Average Heart Rate by Breed</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={hrByBreed}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="avgHR" fill="#dc2626" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Average Heart Rate by Breed</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={hrByBreed} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45} 
+                    textAnchor="end" 
+                    height={80}
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <YAxis 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                    label={{ value: 'Average Heart Rate (bpm)', angle: -90, position: 'insideLeft', fill: '#374151', style: { fontSize: '12px' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Bar 
+                    dataKey="avgHR" 
+                    fill="#dc2626" 
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Average Speed by Breed */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Average Speed by Breed</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={speedByBreed}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="avgSpeed" fill="#dc2626" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Average Speed by Breed</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={speedByBreed} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45} 
+                    textAnchor="end" 
+                    height={80}
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                  />
+                  <YAxis 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                    label={{ value: 'Average Speed (km/h)', angle: -90, position: 'insideLeft', fill: '#374151', style: { fontSize: '12px' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Bar 
+                    dataKey="avgSpeed" 
+                    fill="#4ecdc4" 
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Feed Type Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Feed Type Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={feedTypeDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {feedTypeDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Feed Type Distribution</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={feedTypeDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={90}
+                    innerRadius={25}
+                    fill="#8884d8"
+                    dataKey="value"
+                    stroke="#fff"
+                    strokeWidth={1.5}
+                    paddingAngle={1}
+                  >
+                    {feedTypeDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Age vs Performance */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Age vs Performance</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={ageVsPerformance}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="age" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
-                <Tooltip />
-                <Legend />
-                <Area yAxisId="left" type="monotone" dataKey="avgHR" stackId="1" stroke="#dc2626" fill="#dc2626" fillOpacity={0.6} name="Avg HR (bpm)" />
-                <Area yAxisId="right" type="monotone" dataKey="avgSpeed" stackId="2" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} name="Avg Speed (km/h)" />
-              </AreaChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Age vs Performance</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={ageVsPerformance} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <defs>
+                    <linearGradient id="hrAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#dc2626" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#dc2626" stopOpacity={0.05} />
+                    </linearGradient>
+                    <linearGradient id="speedAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#4ecdc4" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#4ecdc4" stopOpacity={0.05} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="age" 
+                    stroke="#374151"
+                    tick={{ fill: '#374151', fontSize: 11 }}
+                    tickLine={{ stroke: '#374151' }}
+                    label={{ value: 'Age (years)', position: 'insideBottom', offset: -10, fill: '#374151', style: { fontSize: '12px' } }}
+                  />
+                  <YAxis 
+                    yAxisId="left" 
+                    stroke="#dc2626"
+                    tick={{ fill: '#dc2626', fontSize: 11 }}
+                    tickLine={{ stroke: '#dc2626' }}
+                    label={{ value: 'Heart Rate (bpm)', angle: -90, position: 'insideLeft', fill: '#dc2626', style: { fontSize: '12px' } }}
+                  />
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right" 
+                    stroke="#4ecdc4"
+                    tick={{ fill: '#4ecdc4', fontSize: 11 }}
+                    tickLine={{ stroke: '#4ecdc4' }}
+                    label={{ value: 'Speed (km/h)', angle: 90, position: 'insideRight', fill: '#4ecdc4', style: { fontSize: '12px' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                  <Legend wrapperStyle={{ paddingTop: '15px', fontSize: '12px' }} />
+                  <Area yAxisId="left" type="monotone" dataKey="avgHR" stackId="1" stroke="#dc2626" fill="url(#hrAreaGradient)" strokeWidth={2} name="Avg HR (bpm)" />
+                  <Area yAxisId="right" type="monotone" dataKey="avgSpeed" stackId="2" stroke="#4ecdc4" fill="url(#speedAreaGradient)" strokeWidth={2} name="Avg Speed (km/h)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Health Status Overview */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Health Status Overview</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={healthMetrics}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {healthMetrics.map((entry, index) => {
-                    const healthColors = ['#10b981', '#f59e0b', '#ef4444']
-                    return <Cell key={`cell-${index}`} fill={healthColors[index]} />
-                  })}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Health Status Overview</h3>
+            <div className="chart-glow">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={healthMetrics}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={90}
+                    innerRadius={25}
+                    fill="#8884d8"
+                    dataKey="value"
+                    stroke="#fff"
+                    strokeWidth={1.5}
+                    paddingAngle={1}
+                  >
+                    {healthMetrics.map((entry, index) => {
+                      const healthColors = ['#10b981', '#f59e0b', '#ef4444']
+                      return <Cell key={`cell-${index}`} fill={healthColors[index]} />
+                    })}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#ffffff', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      padding: '8px 12px'
+                    }}
+                    labelStyle={{ color: '#111827', fontWeight: '600', fontSize: '12px', marginBottom: '4px' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>

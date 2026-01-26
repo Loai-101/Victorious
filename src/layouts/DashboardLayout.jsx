@@ -19,9 +19,10 @@ const DashboardLayout = () => {
   // Compute menu items directly - always includes alerts in baseItems
     const baseItems = [
       { path: '/dashboard', label: t('nav.dashboard') },
+      { path: '/dashboard/victoris-agent', label: 'Victoris Agent' },
       { path: '/dashboard/schedule', label: t('nav.schedule') },
-    { path: '/dashboard/route-map', label: t('nav.routeMap', 'route map') },
-    { path: '/dashboard/alerts', label: t('nav.alerts') }
+      { path: '/dashboard/track-live', label: t('nav.trackLive', 'Track Live') },
+      { path: '/dashboard/alerts', label: t('nav.alerts') }
     ]
 
   let menuItems = baseItems
@@ -81,8 +82,9 @@ const DashboardLayout = () => {
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path || 
               (item.path === '/dashboard' && location.pathname === '/dashboard/live') ||
-              (item.path === '/dashboard/route-map' && location.pathname.startsWith('/dashboard/route-map')) ||
+              (item.path === '/dashboard/track-live' && location.pathname.startsWith('/dashboard/track-live')) ||
               (item.path === '/dashboard/alerts' && location.pathname.startsWith('/dashboard/alerts')) ||
+              (item.path === '/dashboard/victoris-agent' && location.pathname.startsWith('/dashboard/victoris-agent')) ||
               (item.path === '/dashboard/horses/medical' && location.pathname === '/dashboard/horses/medical')
             return (
               <Link

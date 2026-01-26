@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AppProvider } from './context/AppContext'
 import { LiveDataProvider } from './context/LiveDataContext'
+import ScrollToTop from './components/ScrollToTop'
 import PricingPage from './pages/PricingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -16,9 +17,11 @@ import TrainingSchedule from './pages/TrainingSchedule'
 import AdminPanel from './pages/AdminPanel'
 import HorsesList from './pages/HorsesList'
 import RidersList from './pages/RidersList'
-import RouteMap from './pages/RouteMap'
+import TrackImageLive from './pages/TrackImageLive'
+import TracksList from './pages/TracksList'
 import AlertsPage from './pages/AlertsPage'
 import HorseMedicalPage from './pages/HorseMedicalPage'
+import VictorisAgent from './pages/VictorisAgent'
 
 function AppContent() {
   const { i18n } = useTranslation()
@@ -31,6 +34,7 @@ function AppContent() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/pricing" element={<PricingPage />} />
@@ -47,8 +51,10 @@ function AppContent() {
           <Route path="riders/:id" element={<RiderProfile />} />
           <Route path="trainers/:id" element={<TrainerProfile />} />
           <Route path="schedule" element={<TrainingSchedule />} />
-          <Route path="route-map" element={<RouteMap />} />
+          <Route path="track-live" element={<TracksList />} />
+          <Route path="track-live/:trackId" element={<TrackImageLive />} />
           <Route path="alerts" element={<AlertsPage />} />
+          <Route path="victoris-agent" element={<VictorisAgent />} />
           <Route path="admin" element={<AdminPanel />} />
         </Route>
       </Routes>
