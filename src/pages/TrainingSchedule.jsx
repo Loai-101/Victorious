@@ -1756,7 +1756,7 @@ const TrainingSchedule = () => {
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
   return (
-    <div className="flex h-full bg-gray-50">
+    <div className="flex bg-gray-50">
       {/* Main Calendar Area */}
       <div className="flex-1 p-6">
         {/* Header */}
@@ -1887,7 +1887,7 @@ const TrainingSchedule = () => {
       )}
 
         {/* Calendar Grid */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-white rounded-lg shadow overflow-visible">
           {/* Week Days Header */}
           <div className="grid grid-cols-7 border-b border-gray-200">
             {weekDays.map(day => (

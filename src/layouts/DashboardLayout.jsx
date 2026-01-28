@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApp } from '../context/AppContext'
@@ -16,44 +16,57 @@ const DashboardLayout = () => {
     navigate('/login')
   }
 
-  // Compute menu items directly - always includes alerts in baseItems
+  // Compute menu items with useMemo to ensure it updates when user changes
+  const menuItems = useMemo(() => {
+    // Base items - always includes these
     const baseItems = [
       { path: '/dashboard', label: t('nav.dashboard') },
       { path: '/dashboard/victoris-agent', label: 'Victoris Agent' },
       { path: '/dashboard/schedule', label: t('nav.schedule') },
       { path: '/dashboard/track-live', label: t('nav.trackLive', 'Track Live') },
-      { path: '/dashboard/alerts', label: t('nav.alerts') }
+      { path: '/dashboard/alerts', label: t('nav.alerts') },
+      { path: '/dashboard/reports', label: 'Reports', icon: '📊' },
+      { path: '/dashboard/devices', label: 'Device Management', icon: '📱' }
     ]
 
-  let menuItems = baseItems
+    // If user is not loaded yet, return base items
+    if (!user || !user.role) {
+      return baseItems
+    }
 
-    if (user?.role === 'horse_owner') {
-    menuItems = [
+    // Role-based menu items
+    if (user.role === 'trainer_manager') {
+      return [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
         { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' }
       ]
-  } else if (user?.role === 'stable_manager') {
-    menuItems = [
+    } else if (user.role === 'stable_manager') {
+      return [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
         { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
         { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
       ]
-  } else if (user?.role === 'stable_owner' || user?.role === 'admin') {
-    menuItems = [
+    } else if (user.role === 'stable_owner' || user.role === 'admin') {
+      const items = [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
         { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
-        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
+        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' },
+        { path: '/dashboard/settings', label: 'Settings', icon: '🔧' }
       ]
-
-    if (user?.role === 'admin') {
-      menuItems.push({ path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' })
+      if (user.role === 'admin') {
+        items.push({ path: '/dashboard/admin', label: t('nav.admin'), icon: '⚙️' })
+      }
+      return items
     }
-  }
+
+    // Default: return base items if role doesn't match
+    return baseItems
+  }, [user, t])
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -85,6 +98,9 @@ const DashboardLayout = () => {
               (item.path === '/dashboard/track-live' && location.pathname.startsWith('/dashboard/track-live')) ||
               (item.path === '/dashboard/alerts' && location.pathname.startsWith('/dashboard/alerts')) ||
               (item.path === '/dashboard/victoris-agent' && location.pathname.startsWith('/dashboard/victoris-agent')) ||
+              (item.path === '/dashboard/reports' && location.pathname.startsWith('/dashboard/reports')) ||
+              (item.path === '/dashboard/devices' && location.pathname.startsWith('/dashboard/devices')) ||
+              (item.path === '/dashboard/settings' && location.pathname.startsWith('/dashboard/settings')) ||
               (item.path === '/dashboard/horses/medical' && location.pathname === '/dashboard/horses/medical')
             return (
               <Link

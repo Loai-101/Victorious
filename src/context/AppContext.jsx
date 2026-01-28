@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { mockUser } from '../data/mockData'
 
 const AppContext = createContext()
@@ -12,20 +12,56 @@ export const useApp = () => {
 }
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState(mockUser)
-  const [isAuthenticated, setIsAuthenticated] = useState(true) // Mock auth state
+  // Load user from localStorage on mount, fallback to mockUser
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('victorious_user')
+      if (savedUser) {
+        return JSON.parse(savedUser)
+      }
+    } catch (e) {
+      console.error('Error loading user from localStorage:', e)
+    }
+    return mockUser
+  })
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('victorious_authenticated') === 'true'
+  })
+
+  // Save user to localStorage whenever it changes
+  useEffect(() => {
+    if (user) {
+      try {
+        localStorage.setItem('victorious_user', JSON.stringify(user))
+      } catch (e) {
+        console.error('Error saving user to localStorage:', e)
+      }
+    }
+  }, [user])
+
+  // Save authentication state to localStorage
+  useEffect(() => {
+    localStorage.setItem('victorious_authenticated', isAuthenticated.toString())
+  }, [isAuthenticated])
 
   const updateUser = (userData) => {
-    setUser({ ...user, ...userData })
+    const updatedUser = { ...user, ...userData }
+    setUser(updatedUser)
   }
 
   const login = () => {
     setIsAuthenticated(true)
+    // Ensure user is set if not already
+    if (!user) {
+      setUser(mockUser)
+    }
   }
 
   const logout = () => {
     setIsAuthenticated(false)
     setUser(null)
+    localStorage.removeItem('victorious_user')
+    localStorage.removeItem('victorious_authenticated')
   }
 
   return (

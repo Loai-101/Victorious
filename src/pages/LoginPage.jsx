@@ -46,17 +46,20 @@ const LoginPage = () => {
   }
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
-      style={{
-        backgroundImage: 'url(https://res.cloudinary.com/dvybb2xnc/image/upload/v1768717740/WhatsApp_Image_2026-01-15_at_3.35.18_PM_kjvkts.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="https://res.cloudinary.com/dvybb2xnc/video/upload/v1769596383/WhatsApp_Video_2026-01-28_at_1.30.58_PM_hgfru2.mp4" type="video/mp4" />
+      </video>
+      
       {/* Overlay for better readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-30 z-[1]"></div>
       
       <div className="absolute top-4 right-4 z-10">
         <LanguageSwitcher />

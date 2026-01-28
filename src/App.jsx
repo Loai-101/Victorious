@@ -22,6 +22,9 @@ import TracksList from './pages/TracksList'
 import AlertsPage from './pages/AlertsPage'
 import HorseMedicalPage from './pages/HorseMedicalPage'
 import VictorisAgent from './pages/VictorisAgent'
+import ReportsPage from './pages/ReportsPage'
+import DeviceManagement from './pages/DeviceManagement'
+import SettingsPage from './pages/SettingsPage'
 
 function AppContent() {
   const { i18n } = useTranslation()
@@ -55,6 +58,9 @@ function AppContent() {
           <Route path="track-live/:trackId" element={<TrackImageLive />} />
           <Route path="alerts" element={<AlertsPage />} />
           <Route path="victoris-agent" element={<VictorisAgent />} />
+          <Route path="reports" element={<ReportsPage />} />
+          <Route path="devices" element={<DeviceManagement />} />
+          <Route path="settings" element={<SettingsPage />} />
           <Route path="admin" element={<AdminPanel />} />
         </Route>
       </Routes>

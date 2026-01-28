@@ -4,7 +4,7 @@ export const mockUser = {
   id: 1,
   name: 'Sheikh Nasser bin Hamad',
   email: 'john@example.com',
-  role: 'stable_owner', // 'horse_owner', 'stable_manager', 'stable_owner', 'admin'
+  role: 'stable_owner', // 'trainer_manager', 'stable_manager', 'stable_owner', 'admin'
   subscription: 'pro', // 'free', 'pro', 'enterprise'
   country: 'United States',
   city: 'New York',
@@ -587,6 +587,15 @@ export const mockTrainers = [
   }
 ]
 
+// Veterinarians / Doctors for horse medical care
+export const mockDoctors = [
+  { id: 1, name: 'Dr. Khalid Al-Mahmoud', email: 'khalid.vet@clinic.com', phone: '+973 3333 1111', specialization: 'Equine Medicine', licenseNumber: 'VET-BRN-001', status: 'Active', country: 'Bahrain' },
+  { id: 2, name: 'Dr. Layla Hassan', email: 'layla.vet@equine.ae', phone: '+971 5555 2222', specialization: 'Sports Medicine', licenseNumber: 'VET-UAE-002', status: 'Active', country: 'UAE' },
+  { id: 3, name: 'Dr. Pierre Dubois', email: 'pierre.dubois@vet.fr', phone: '+33 1 42 00 00 00', specialization: 'Surgery & Rehabilitation', licenseNumber: 'VET-FR-003', status: 'Active', country: 'France' },
+  { id: 4, name: 'Dr. Nora Al-Saud', email: 'nora.vet@riyadh.sa', phone: '+966 555 444 333', specialization: 'Internal Medicine', licenseNumber: 'VET-KSA-004', status: 'Active', country: 'Saudi Arabia' },
+  { id: 5, name: 'Dr. James Wilson', email: 'j.wilson@equineclinic.com', phone: '+1 555 123 4567', specialization: 'Emergency & Critical Care', licenseNumber: 'VET-US-005', status: 'Active', country: 'United States' }
+]
+
 // Generate live data for a horse - deterministic based on horse ID
 export const generateLiveData = (horse) => {
   const baseLat = horse.location?.lat || 40.7128
@@ -701,7 +710,7 @@ export const mockDeviceApprovals = [
   },
   {
     id: 2,
-    userName: 'Jane Smith',
+    userName: 'Dr Khaled Al-Hassan',
     email: 'jane@example.com',
     country: 'Canada',
     status: 'pending',
@@ -718,9 +727,10 @@ export const mockDeviceApprovals = [
 ]
 
 export const mockUsers = [
-  { id: 1, name: 'Sheikh Nasser bin Hamad', email: 'john@example.com', role: 'stable_owner', subscription: 'pro' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'stable_manager', subscription: 'free' },
-  { id: 3, name: 'Ahmed Ali', email: 'ahmed@example.com', role: 'horse_owner', subscription: 'enterprise' }
+  { id: 1, name: 'Sheikh Nasser bin Hamad', email: 'john@example.com', role: 'stable_owner', subscription: 'pro', status: 'Active' },
+  { id: 2, name: 'Dr Khaled Al-Hassan', email: 'jane@example.com', role: 'stable_manager', subscription: 'free', status: 'Active' },
+  { id: 3, name: 'Ahmed Ali', email: 'ahmed@example.com', role: 'trainer_manager', subscription: 'enterprise', status: 'Active' },
+  { id: 4, name: 'Admin User', email: 'admin@victorious.com', role: 'admin', subscription: 'enterprise', status: 'Active' }
 ]
 
 export const mockBatteryMonitoring = [

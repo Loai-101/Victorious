@@ -9,7 +9,7 @@ A complete front-end application for monitoring horse heart rates and performanc
 - 📈 **Advanced Analytics**: Charts and graphs for performance analysis
 - 🗺️ **Route Mapping**: Visualize training routes with Leaflet maps
 - 📅 **Training Schedule**: Manage and edit training schedules
-- 👥 **Multi-user Support**: Role-based access (Horse Owner, Stable Manager, Stable Owner, Admin)
+- 👥 **Multi-user Support**: Role-based access (Trainer Manager, Stable Manager, Stable Owner, Admin)
 - 🌍 **Multi-language**: Support for English, Arabic (RTL), and French
 - 💳 **Subscription Plans**: Free, Pro, and Enterprise tiers with feature restrictions
 
@@ -81,7 +81,7 @@ src/
 
 ## User Roles
 
-- **Horse Owner**: 1 horse, basic features
+- **Trainer Manager**: 1 horse, basic features
 - **Stable Manager**: 10 horses, advanced features
 - **Stable Owner**: 50+ horses, all features
 - **Admin**: Full system access
