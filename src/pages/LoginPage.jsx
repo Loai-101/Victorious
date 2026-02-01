@@ -21,7 +21,7 @@ const LoginPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContent(true)
-    }, 1000) // Show after 1 second
+    }, 2000) // Show after 2 seconds
 
     return () => clearTimeout(timer)
   }, [])
@@ -55,7 +55,7 @@ const LoginPage = () => {
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="https://res.cloudinary.com/dvybb2xnc/video/upload/v1769596383/WhatsApp_Video_2026-01-28_at_1.30.58_PM_hgfru2.mp4" type="video/mp4" />
+        <source src="https://res.cloudinary.com/dvybb2xnc/video/upload/v1769971273/WhatsApp_Video_2026-02-01_at_3.57.51_PM_qd0pye.mp4" type="video/mp4" />
       </video>
       
       {/* Overlay for better readability */}
