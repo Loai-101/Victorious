@@ -25,13 +25,12 @@ const DashboardLayout = () => {
       { path: '/dashboard/schedule', label: t('nav.schedule') },
       { path: '/dashboard/track-live', label: t('nav.trackLive', 'Track Live') },
       { path: '/dashboard/alerts', label: t('nav.alerts') },
-      { path: '/dashboard/reports', label: 'Reports', icon: '📊' },
       { path: '/dashboard/devices', label: 'Device Management', icon: '📱' }
     ]
 
-    // If user is not loaded yet, return base items
+    // If user is not loaded yet, return base items with Reports
     if (!user || !user.role) {
-      return baseItems
+      return [...baseItems, { path: '/dashboard/reports', label: 'Reports', icon: '📊' }]
     }
 
     // Role-based menu items
@@ -39,7 +38,8 @@ const DashboardLayout = () => {
       return [
         ...baseItems,
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
-        { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' }
+        { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
+        { path: '/dashboard/reports', label: 'Reports', icon: '📊' }
       ]
     } else if (user.role === 'stable_manager') {
       return [
@@ -47,7 +47,8 @@ const DashboardLayout = () => {
         { path: '/dashboard/horses', label: t('nav.horses'), icon: '🐴' },
         { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
-        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' }
+        { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' },
+        { path: '/dashboard/reports', label: 'Reports', icon: '📊' }
       ]
     } else if (user.role === 'stable_owner' || user.role === 'admin') {
       const items = [
@@ -56,6 +57,7 @@ const DashboardLayout = () => {
         { path: '/dashboard/horses/medical', label: t('nav.horseMedical', 'Horse Medical'), icon: '🏥' },
         { path: '/dashboard/riders', label: t('nav.riders'), icon: '👤' },
         { path: '/dashboard/trainers/1', label: t('nav.trainers'), icon: '🏋️' },
+        { path: '/dashboard/reports', label: 'Reports', icon: '📊' },
         { path: '/dashboard/settings', label: 'Settings', icon: '🔧' }
       ]
       if (user.role === 'admin') {
@@ -64,8 +66,8 @@ const DashboardLayout = () => {
       return items
     }
 
-    // Default: return base items if role doesn't match
-    return baseItems
+    // Default: return base items with Reports if role doesn't match
+    return [...baseItems, { path: '/dashboard/reports', label: 'Reports', icon: '📊' }]
   }, [user, t])
 
   return (

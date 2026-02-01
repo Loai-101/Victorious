@@ -2316,6 +2316,7 @@ const ReportsPage = () => {
   }
 
   const printReport = () => {
+    // Only the report content is visible when printing (see @media print in index.css)
     window.print()
   }
 
@@ -2512,7 +2513,7 @@ const ReportsPage = () => {
       {/* Report Display Area */}
       <div>
           {reportData ? (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div id="report-print-area" className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
               {/* Report Header */}
               <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
                 <div className="flex justify-between items-center">
@@ -2520,7 +2521,7 @@ const ReportsPage = () => {
                     <h2 className="text-2xl font-bold text-gray-900">{reportData.title}</h2>
                     <p className="text-sm text-gray-500 mt-1">Generated: {reportData.generatedAt}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 no-print">
                     <button
                       onClick={exportToCSV}
                       className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition-all shadow-sm hover:shadow-md flex items-center gap-2"
