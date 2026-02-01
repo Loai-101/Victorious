@@ -7,7 +7,7 @@ const TypingIndicator = () => {
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 border-red-600">
           <img 
             src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1768198383/121199422_209359507247292_874482859999089046_n_ajrbdv.jpg" 
-            alt="Victoris Agent" 
+            alt="Victorious Agent" 
             className="w-full h-full object-cover"
           />
         </div>

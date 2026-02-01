@@ -21,7 +21,7 @@ const DashboardLayout = () => {
     // Base items - always includes these
     const baseItems = [
       { path: '/dashboard', label: t('nav.dashboard') },
-      { path: '/dashboard/victoris-agent', label: 'Victoris Agent' },
+      { path: '/dashboard/victoris-agent', label: 'Victorious Agent' },
       { path: '/dashboard/schedule', label: t('nav.schedule') },
       { path: '/dashboard/track-live', label: t('nav.trackLive', 'Track Live') },
       { path: '/dashboard/alerts', label: t('nav.alerts') },

@@ -73,12 +73,12 @@ const VictorisAgent = () => {
             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 flex items-center justify-center">
               <img 
                 src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1768198383/121199422_209359507247292_874482859999089046_n_ajrbdv.jpg" 
-                alt="Victoris Agent" 
+                alt="Victorious Agent" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <h1 className="text-3xl font-bold mb-2">Victoris Agent</h1>
+              <h1 className="text-3xl font-bold mb-2">Victorious Agent</h1>
               <p className="text-red-100">Your intelligent assistant for horses, riders, and trainers</p>
             </div>
           </div>
@@ -95,11 +95,11 @@ const VictorisAgent = () => {
                 <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-red-600 flex items-center justify-center mx-auto mb-4 shadow-md">
                   <img 
                     src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1768198383/121199422_209359507247292_874482859999089046_n_ajrbdv.jpg" 
-                    alt="Victoris Agent" 
+                    alt="Victorious Agent" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-lg font-medium mb-2">Welcome to Victoris Agent</p>
+                <p className="text-lg font-medium mb-2">Welcome to Victorious Agent</p>
                 <p className="text-sm">Ask me about horses, trainers, or riders to get started</p>
               </div>
             </div>
