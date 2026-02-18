@@ -56,6 +56,13 @@ const getFlag = (key, value) => {
 
 const BloodTestTab = ({ horseId, onToast }) => {
   const [showModal, setShowModal] = useState(false)
+  const [step, setStep] = useState('choice') // 'choice' | 'scan' | 'upload' | 'form'
+  const [attachment, setAttachment] = useState(null) // { type: 'scan'|'pdf'|'image', name: string, data: string }
+  const videoRef = React.useRef(null)
+  const canvasRef = React.useRef(null)
+  const streamRef = React.useRef(null)
+  const fileInputPdfRef = React.useRef(null)
+  const fileInputImageRef = React.useRef(null)
   const [refreshKey, setRefreshKey] = useState(0)
   const [tests, setTests] = useState([])
   const [formData, setFormData] = useState({
@@ -85,12 +92,76 @@ const BloodTestTab = ({ horseId, onToast }) => {
     setTests(loadedTests)
   }, [horseId, refreshKey])
 
+  // Camera: start when step is 'scan', stop on unmount or step change
+  useEffect(() => {
+    if (step !== 'scan' || !showModal) return
+    let stream = null
+    const startCamera = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        streamRef.current = stream
+        if (videoRef.current) videoRef.current.srcObject = stream
+      } catch (err) {
+        onToast('Could not access camera: ' + (err.message || 'Permission denied'), 'error')
+        setStep('choice')
+      }
+    }
+    startCamera()
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop())
+        streamRef.current = null
+      }
+    }
+  }, [step, showModal])
+
+  const closeModal = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(t => t.stop())
+      streamRef.current = null
+    }
+    setShowModal(false)
+    setStep('choice')
+    setAttachment(null)
+  }
+
+  const handleCapture = () => {
+    const video = videoRef.current
+    const canvas = canvasRef.current
+    if (!video || !canvas || !video.videoWidth) return
+    const ctx = canvas.getContext('2d')
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    ctx.drawImage(video, 0, 0)
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.85)
+    setAttachment({ type: 'scan', name: 'blood-test-scan.jpg', data: dataUrl })
+    setStep('form')
+  }
+
+  const handleFileSelect = (e, type) => {
+    const file = e.target?.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      setAttachment({ type, name: file.name, data: reader.result })
+      setStep('form')
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    localStorageService.saveBloodTest(horseId, formData)
+    const dataToSave = { ...formData }
+    if (attachment) {
+      dataToSave.attachmentType = attachment.type
+      dataToSave.attachmentName = attachment.name
+      dataToSave.attachmentData = attachment.data
+    }
+    localStorageService.saveBloodTest(horseId, dataToSave)
     setRefreshKey(prev => prev + 1)
     onToast('Blood test saved successfully', 'success')
-    setShowModal(false)
+    closeModal()
     // Reset form
     const resetData = {
       testDate: new Date().toISOString().slice(0, 16),
@@ -108,6 +179,8 @@ const BloodTestTab = ({ horseId, onToast }) => {
       qcHem: '', qcLip: '', qcIct: ''
     }
     setFormData(resetData)
+    setAttachment(null)
+    setStep('choice')
   }
 
   const updateField = (field, value) => {
@@ -149,7 +222,7 @@ const BloodTestTab = ({ horseId, onToast }) => {
     <div className="space-y-6">
       <div className="flex justify-end">
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => { setStep('choice'); setAttachment(null); setShowModal(true); }}
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
         >
           New Blood Test
@@ -189,6 +262,19 @@ const BloodTestTab = ({ horseId, onToast }) => {
                   <div className="mt-3 text-sm">
                     <span className="font-semibold text-gray-700">Notes:</span>{' '}
                     <span className="text-gray-900">{test.notes}</span>
+                  </div>
+                )}
+                {(test.attachmentType || test.attachmentName) && (
+                  <div className="mt-3 text-sm">
+                    <span className="font-semibold text-gray-700">Attachment:</span>{' '}
+                    <span className="text-gray-900">
+                      {test.attachmentType === 'scan' && 'Scanned document'}
+                      {test.attachmentType === 'pdf' && `PDF: ${test.attachmentName}`}
+                      {test.attachmentType === 'image' && `Image: ${test.attachmentName}`}
+                    </span>
+                    {test.attachmentData?.startsWith('data:image') && (
+                      <img src={test.attachmentData} alt="Blood test" className="mt-2 max-h-32 rounded border border-gray-300 object-contain" />
+                    )}
                   </div>
                 )}
               </div>
@@ -384,20 +470,162 @@ const BloodTestTab = ({ horseId, onToast }) => {
         </div>
       )}
 
+      {/* Hidden file inputs for upload */}
+      <input
+        type="file"
+        ref={fileInputPdfRef}
+        accept=".pdf,application/pdf"
+        className="hidden"
+        onChange={(e) => handleFileSelect(e, 'pdf')}
+      />
+      <input
+        type="file"
+        ref={fileInputImageRef}
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFileSelect(e, 'image')}
+      />
+      <canvas ref={canvasRef} className="hidden" />
+
       {/* Add Test Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-              <h3 className="text-lg font-semibold">New Blood Test</h3>
+              <h3 className="text-lg font-semibold">
+                {step === 'choice' && 'New Blood Test'}
+                {step === 'scan' && 'Scan Blood Test'}
+                {step === 'upload' && 'Upload Blood Test'}
+                {step === 'form' && 'New Blood Test'}
+              </h3>
               <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
               >
                 ×
               </button>
             </div>
+
+            {/* Step: Choose Upload or Scan */}
+            {step === 'choice' && (
+              <div className="p-8 flex flex-col items-center gap-6">
+                <p className="text-gray-600">Add a new blood test by scanning or uploading a document.</p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep('scan')}
+                    className="px-8 py-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-50 font-medium flex items-center gap-2"
+                  >
+                    Scan
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep('upload')}
+                    className="px-8 py-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-50 font-medium flex items-center gap-2"
+                  >
+                    Upload
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep('form')}
+                    className="px-8 py-4 rounded-lg border-2 border-gray-400 text-gray-700 hover:bg-gray-50 font-medium"
+                  >
+                    Enter manually
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step: Scan – camera */}
+            {step === 'scan' && (
+              <div className="p-6">
+                <div className="relative bg-black rounded-lg overflow-hidden aspect-video max-h-[50vh]">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex justify-center gap-3 mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep('choice')}
+                    className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCapture}
+                    className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                  >
+                    Capture
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step: Upload – PDF or image */}
+            {step === 'upload' && (
+              <div className="p-8 flex flex-col items-center gap-6">
+                <p className="text-gray-600">Choose how to upload your blood test document.</p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => fileInputPdfRef.current?.click()}
+                    className="px-8 py-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-50 font-medium flex items-center gap-2"
+                  >
+                    Upload as PDF
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => fileInputImageRef.current?.click()}
+                    className="px-8 py-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-50 font-medium flex items-center gap-2"
+                  >
+                    Image from gallery
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep('choice')}
+                  className="text-gray-500 hover:text-gray-700 text-sm"
+                >
+                  ← Back
+                </button>
+              </div>
+            )}
+
+            {/* Step: Form (manual entry, with optional attachment) */}
+            {step === 'form' && (
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
+              {/* Attachment preview (scan or upload) */}
+              {attachment && (
+                <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">
+                      {attachment.type === 'scan' && 'Scanned document'}
+                      {attachment.type === 'pdf' && 'PDF: ' + attachment.name}
+                      {attachment.type === 'image' && 'Image: ' + attachment.name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setAttachment(null)}
+                      className="text-red-600 text-sm hover:underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  {attachment.type !== 'pdf' && attachment.data?.startsWith('data:image') && (
+                    <img src={attachment.data} alt="Attachment" className="max-h-40 rounded border border-gray-300 object-contain" />
+                  )}
+                  {attachment.type === 'pdf' && (
+                    <p className="text-sm text-gray-500">PDF attached: {attachment.name}</p>
+                  )}
+                </div>
+              )}
+
               {/* Test Header */}
               <div className="grid grid-cols-2 gap-4 border-b pb-4">
                 <div>
@@ -545,7 +773,7 @@ const BloodTestTab = ({ horseId, onToast }) => {
               <div className="flex gap-3 pt-4 border-t">
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={closeModal}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
                 >
                   Cancel
@@ -558,6 +786,7 @@ const BloodTestTab = ({ horseId, onToast }) => {
                 </button>
               </div>
             </form>
+            )}
           </div>
         </div>
       )}
